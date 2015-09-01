@@ -1,0 +1,79 @@
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <style>
+        table, th, td {
+            margin: auto;
+            border: 1px solid black;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            padding: 5px;
+        }
+
+        a {
+            text-decoration: none;
+        }
+
+        .center {
+            margin: auto;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="center">
+        <a href="<?php echo $this->url('user', array('action' => 'index')); ?>">Back to Users Information List</a>
+        <br>
+        <h1>Users Search</h1>
+
+        <?php
+        // Search Form
+        echo $this->form()->openTag($form);
+        foreach ($form as $element) {
+            echo $this->formElement($element);
+            echo $this->formElementErrors($element);
+        }
+        echo $this->form()->closeTag();
+        // Search Results
+        if (count($searchResults)) {
+            ?>
+            <br>
+            <table>
+                <tr>
+                    <th>No.</th>
+                    <th>First name</th>
+                    <th>Last name</th>
+                    <th>Email</th>
+                    <th>Role</th>
+                    <th>Activated</th>
+                    <th>Edit</th>
+                    <th>Delete</th>
+                </tr>
+                <?php foreach ($searchResults as $user): ?>
+                    <tr>
+                        <td><?php echo $this->escapeHtml($user->userId); ?></td>
+                        <td><?php echo $this->escapeHtml($user->firstName); ?></td>
+                        <td><?php echo $this->escapeHtml($user->lastName); ?></td>
+                        <td><?php echo $this->escapeHtml($user->email); ?></td>
+                        <td><?php echo $this->escapeHtml($user->role); ?></td>
+                        <td>
+                            <?php
+                            if ($user->activated) {
+                                echo 'Yes';
+                            } else {
+                                echo 'No';
+                            }
+                            ?>
+                        </td>
+                        <td><a href="<?php echo $this->url('user', array('action' => 'edit', 'id' => $user->userId));
+                            ?>">Edit</a></td>
+                        <td><a href="<?php echo $this->url('user', array('action' => 'delete', 'id' => $user->userId));
+                            ?>">Delete</a></td></td>
+                    </tr>
+                <?php endforeach; ?>
+            </table>
+        <?php }
+        ?>
+    </div>
+</body>

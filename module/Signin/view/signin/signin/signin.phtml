@@ -1,0 +1,30 @@
+<?php
+// module/Album/view/album/album/c.phtml:
+
+$title = 'Login';
+$this->headTitle($title);
+?>
+<h1><?php echo $this->escapeHtml($title); ?></h1>
+<?php echo $this->escapeHtml($this->messages); ?>
+<?php
+$form = $this->form;
+//$user = $this->user;
+$form->setAttribute('action', $this->url(
+    'signin',
+    array(
+        'action' => 'signin',
+    )
+));
+$form->prepare();
+
+echo $this->form()->openTag($form),'<br/>';
+echo $this->formRow($form->get('email')),'<br/>';
+echo $this->formRow($form->get('password')),'<br/>';
+echo $this->formSubmit($form->get('submit')),'<br/>';
+echo $this->form()->closeTag();
+
+//echo $this->error;
+
+if ($user = $this->identity()) {
+    echo 'Login as ',$user->email;
+}
